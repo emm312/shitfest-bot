@@ -1,4 +1,4 @@
-use mysql::{Opts, Pool};
+use mysql::{Opts, Pool, OptsBuilder};
 pub use poise::serenity_prelude as serenity;
 use shitfest_bot::{bot::Data, secrets};
 use std::{
@@ -11,7 +11,14 @@ async fn main() {
     env_logger::init();
 
     let url = shitfest_bot::secrets::get_db_url();
-    let pool = Pool::new(Opts::from_url(&url).unwrap()).unwrap();
+    let db_name = shitfest_bot::secrets::get_db_name();
+    let username = shitfest_bot::secrets::get_db_username();
+    let db_password = shitfest_bot::secrets::get_db_password();
+    let pool = Pool::new(OptsBuilder::new()
+        .ip_or_hostname(Some(url))
+        .db_name(Some(db_name))
+        .user(Some(username))
+        .pass(Some(db_password))).unwrap();
 
     let token = secrets::get_bot_token();
 

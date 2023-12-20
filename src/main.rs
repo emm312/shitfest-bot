@@ -23,7 +23,7 @@ async fn main() {
     let token = secrets::get_bot_token();
 
     let options = poise::FrameworkOptions {
-        commands: vec![shitfest_bot::commands::help()],
+        commands: vec![shitfest_bot::commands::help(), shitfest_bot::commands::random_meme()],
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some("!".into()),
             case_insensitive_commands: true,
